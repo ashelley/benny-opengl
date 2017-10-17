@@ -3,7 +3,7 @@
 
 #include "sdl/SDL.h"
 #undef main
-#include <string>;
+#include <string>
 
 class Display {
 public:
