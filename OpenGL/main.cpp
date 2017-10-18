@@ -22,8 +22,12 @@ int main(int argc, char* argv) {
 		Vertex(glm::vec3(0,0.5f,0), glm::vec2(0.5,1.0)),
 		Vertex(glm::vec3(0.5f,-0.5f,0), glm::vec2(1.0,0.0))
 	};
+	
+	unsigned int indices[]{ 0, 1, 2 };
 
-	Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0]));
+	Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0]));
+	Mesh monkey("./meshes/monkey.obj");
+	//Mesh simplecube("./meshes/simpleCube.obj");
 
 	float counter = 0.0f;
 
@@ -43,10 +47,12 @@ int main(int argc, char* argv) {
 		shader.Update(transform, camera);
 		texture.Bind(0);
 		mesh.Draw();
+		monkey.Draw();
+		//simplecube.Draw();
 
 		display.Update();
 
-		counter += 0.001f;
+		counter += 0.0001f;
 	}
 	return 0;
 }
