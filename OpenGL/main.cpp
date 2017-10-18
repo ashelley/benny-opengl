@@ -5,11 +5,16 @@
 #include "texture.h"
 #include "mesh.h"
 #include "transform.h"
+#include "camera.h"
+
+#define WIDTH 800
+#define HEIGHT 600
 
 int main(int argc, char* argv) {
-	Display display(800, 600, "hello world");
+	Display display(WIDTH, HEIGHT, "hello world");
 	Shader shader("./basicShader");
 	Texture texture("./textures/bricks.jpg");
+	Camera camera(glm::vec3(0, 0, -3), 70.0f, float(WIDTH) / float(HEIGHT), 0.01f, 1000.0f);
 	Transform transform;
 
 	Vertex vertices[] = {
@@ -24,15 +29,18 @@ int main(int argc, char* argv) {
 
 	while (!display.IsClosing()) {
 
-		float cosCounter = cosf(counter / 2.0);
+		float cosCounter = cosf((float)counter / 2.0);
 
 		transform.GetPos().x = sinf(counter);
+		transform.GetPos().z = cosCounter;
 		transform.GetRot().z = counter;
-		transform.SetScale(glm::vec3(cosCounter, cosCounter, cosCounter));
+		transform.GetRot().y = counter;
+		transform.GetRot().z = counter;
+		//transform.SetScale(glm::vec3(cosCounter, cosCounter, cosCounter));
 
 		display.Clear(0.05f, 0.15f, 0.3f);
 		shader.Bind();
-		shader.Update(transform);
+		shader.Update(transform, camera);
 		texture.Bind(0);
 		mesh.Draw();
 
